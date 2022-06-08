@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tribe_space/basics_information/basic_information_page.dart';
 import 'package:tribe_space/constants/colors.dart';
 import 'package:tribe_space/utils/size_config.dart';
 import 'package:tribe_space/widgets/primary_button.dart';
+
+import '../views/basics_information/basic_information_page.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);

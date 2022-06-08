@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:tribe_space/utils/size_config.dart';
-import 'package:tribe_space/views/root/root_page.dart';
+import 'package:tribe_space/views/add_color/add_color_page.dart';
+import 'package:tribe_space/views/people/photo/photo_page.dart';
 import 'package:tribe_space/views/splash/splash_page.dart';
+import 'package:tribe_space/views/tribe_code/tribe_code_page.dart';
 
-import 'views/description_page/description_page.dart';
+import 'views/topics/topics_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +33,9 @@ class MyApp extends StatelessWidget {
             return GetMaterialApp(
                 theme: ThemeData(fontFamily: 'OpenSans'),
                 debugShowCheckedModeBanner: false,
-                home: const SplashPage()); // RootPage());
+                home: SplashPage()
+                //AddColorPage()
+                ); // RootPage());
           },
         );
       },

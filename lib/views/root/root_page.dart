@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tribe_space/constants/icons.dart';
 import 'package:tribe_space/utils/size_config.dart';
+import 'package:tribe_space/views/files/files_page.dart';
 import 'package:tribe_space/views/hub/hub_page.dart';
 import 'package:tribe_space/views/incognito/incognito_page.dart';
+import 'package:tribe_space/views/people/people_page.dart';
+import 'package:tribe_space/views/people/photo/photo_page.dart';
+import 'package:tribe_space/views/topics/topics_page.dart';
 import 'package:tribe_space/views/userchat/userchat_page.dart';
 
 class RootPage extends StatefulWidget {
@@ -19,7 +23,20 @@ class _RootPageState extends State<RootPage> {
     UserChatPage(),
     const HubPage(),
     IncognitoPage(),
-    const Text('hi')
+    const PeoplePage(),
+    const TopicsPage(),
+    PhotoPage(),
+    FilesPage()
+  ];
+
+  List<String> titleList = [
+    'chat',
+    'stories',
+    'incognito',
+    'people',
+    'topics',
+    'photos',
+    'files'
   ];
 
   @override
@@ -86,46 +103,69 @@ class _RootPageState extends State<RootPage> {
                   const Spacer(),
                 ],
               ),
-              SizedBox(
-                height: 3 * SizeConfig.heightMultiplier,
-              ),
+
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    categoryHead(
-                      0,
-                      selectedindex == 0 ? multipleChatfill : multipleChat,
-                      'chat',
-                      false,
-                      '0',
-                    ),
-                    categoryHead(
-                      1,
-                      selectedindex == 1 ? moodHappyfill : moodHappy,
-                      'hub',
-                      selectedindex == 0 || selectedindex == 3 ? false : true,
-                      '7',
-                    ),
-                    categoryHead(
-                      2,
-                      selectedindex == 2 ? layersHidefill : layersHide,
-                      'incognito',
-                      selectedindex == 2 ? false : true,
-                      '7',
-                    ),
-                    categoryHead(
-                      3,
-                      selectedindex == 3 ? womenGlassesfill : womenGlasses,
-                      'people',
-                      false,
-                      '0',
-                    ),
-                  ],
+                padding: EdgeInsets.only(left: 5 * SizeConfig.widthMultiplier),
+                child: Container(
+                  height: 6 * SizeConfig.heightMultiplier,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: titleList.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 3 * SizeConfig.widthMultiplier),
+                          child: categoryHead(
+                            index,
+                            titleList[index],
+                            selectedindex == 0 || selectedindex == 3
+                                ? false
+                                : true,
+                            '7',
+                          ),
+                        );
+                      }),
                 ),
               ),
-              const Divider(),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 20),
+              //   child:
+              //   Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       // categoryHead(
+              //       //   0,
+              //       //   'chat',
+              //       //   false,
+              //       //   '0',
+              //       // ),
+              //       // categoryHead(
+              //       //   1,
+              //       //   'stories',
+              //       //   selectedindex == 0 || selectedindex == 3 ? false : true,
+              //       //   '7',
+              //       // ),
+              //       // categoryHead(
+              //       //   2,
+              //       //   'incognito',
+              //       //   selectedindex == 2 ? false : true,
+              //       //   '7',
+              //       // ),
+              //       // categoryHead(
+              //       //   3,
+              //       //   'people',
+              //       //   false,
+              //       //   '0',
+              //       // ),
+              //     ],
+              //   ),
+              // ),
+              Container(
+                height: 1,
+                width: 100 * SizeConfig.widthMultiplier,
+                decoration: BoxDecoration(color: Colors.grey.shade300),
+              ),
+              // const Divider(),
               Expanded(child: list[selectedindex])
             ],
           ),
@@ -134,7 +174,7 @@ class _RootPageState extends State<RootPage> {
     );
   }
 
-  Widget categoryHead(int index, String icon, String text, bool isNotification,
+  Widget categoryHead(int index, String text, bool isNotification,
       String numberofnotificaiton) {
     return GestureDetector(
         onTap: () {
@@ -142,54 +182,69 @@ class _RootPageState extends State<RootPage> {
             selectedindex = index;
           });
         },
-        child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 6 * SizeConfig.heightMultiplier,
-              width: 15 * SizeConfig.widthMultiplier,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      icon,
-                      // color: selectedindex == index ? Colors.amber : Colors.grey,
-                    ),
-                  ),
-                  selectedindex == index
-                      ? const SizedBox()
-                      : isNotification
-                          ? Positioned(
-                              top: -10,
-                              right: -0,
-                              child: Container(
-                                height: 4.5 * SizeConfig.heightMultiplier,
-                                width: 4.5 * SizeConfig.widthMultiplier,
-                                decoration: const BoxDecoration(
-                                    color: Color(0xffD96363),
-                                    shape: BoxShape.circle),
-                                child: Center(
-                                    child: Text(numberofnotificaiton,
-                                        style: const TextStyle(
-                                            color: Colors.white))),
-                              ),
-                            )
-                          : const SizedBox(),
-                ],
+        child: SizedBox(
+          height: 6 * SizeConfig.heightMultiplier,
+          child: Stack(
+            //crossAxisAlignment: CrossAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              //notification
+              SizedBox(
+                height: 2 * SizeConfig.heightMultiplier,
+                width: 17 * SizeConfig.widthMultiplier,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    index == 1 || index == 2
+                        ? Positioned(
+                            top: -10,
+                            right: 30,
+                            child: Container(
+                              height: 4.5 * SizeConfig.heightMultiplier,
+                              width: 4.5 * SizeConfig.widthMultiplier,
+                              decoration: const BoxDecoration(
+                                  color: Color(0xffD96363),
+                                  shape: BoxShape.circle),
+                              child: Center(
+                                  child: Text(numberofnotificaiton,
+                                      style: const TextStyle(
+                                          color: Colors.white))),
+                            ),
+                          )
+                        : const SizedBox()
+                  ],
+                ),
               ),
-            ),
-            // SizedBox(
-            //   height: 0.5 * SizeConfig.heightMultiplier,
-            // ),
-            Text(
-              text,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  color: selectedindex == index ? Colors.black : Colors.grey),
-            ),
-          ],
+              // SizedBox(
+              //   height: 0.5 * SizeConfig.heightMultiplier,
+              // ),
+              Positioned(
+                top: 3 * SizeConfig.heightMultiplier,
+                child: Text(
+                  text,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 1.8 * SizeConfig.textMultiplier,
+                      color: selectedindex == index
+                          ? const Color(0xffD96363)
+                          : Colors.grey),
+                ),
+              ),
+              // const SizedBox(height: 6),
+              Positioned(
+                bottom: -1,
+                child: Container(
+                  height: 3,
+                  width: 7 * SizeConfig.widthMultiplier,
+                  decoration: BoxDecoration(
+                      color: selectedindex == index
+                          ? Colors.red
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(20)),
+                ),
+              ),
+            ],
+          ),
         ));
   }
 }

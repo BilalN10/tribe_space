@@ -38,21 +38,21 @@ class _MyInputFieldState extends State<NameField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 5 * SizeConfig.heightMultiplier,
-      // decoration: BoxDecoration(
-      // border: Border.all(color: Colors.black),
-      // // color: widget.isCircular ? const Color(0xffF4F6F9) : Colors.white,
-      // borderRadius: widget.isCircular
-      //     ? const BorderRadius.only(
-      //         topLeft: Radius.circular(10), topRight: Radius.circular(10))
-      //     : BorderRadius.only(
-      //         bottomLeft: Radius.circular(10),
-      //         bottomRight: Radius.circular(10))),
+      height: widget.isCircular
+          ? 6 * SizeConfig.heightMultiplier
+          : 6 * SizeConfig.heightMultiplier,
+      decoration: widget.isCircular
+          ? BoxDecoration(
+              border: Border.all(color: greyColor),
+              // color: widget.isCircular ? const Color(0xffF4F6F9) : Colors.white,
+              borderRadius: BorderRadius.circular(10))
+          : BoxDecoration(),
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: 2 * SizeConfig.widthMultiplier, vertical: 0),
         child: TextFormField(
+          maxLines: 8,
           cursorColor: primaryColor,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           obscureText: widget.isPass && showPass,
@@ -81,7 +81,7 @@ class _MyInputFieldState extends State<NameField> {
                             )),
                   )
                 : const SizedBox(),
-            contentPadding: const EdgeInsets.only(top: 10, left: 10.0),
+            contentPadding: const EdgeInsets.only(top: 16, left: 10.0),
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
